@@ -1,26 +1,19 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import ButtonTab from './components/ButtonTab'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const App: React.FC = () => {
+   return (
+      <div className="bg-gray-100 min-h-screen px-4 md:px-0 py-7">
+         <div className="container mx-auto bg-white shadow-md p-4 md:p-6">
+            <div className="flex items-center gap-2">
+               <ButtonTab>All</ButtonTab>
+            </div>
+            <p>
+               Lorem ipsum dolor sit amet consectetur adipisicing elit. Sint fugit error voluptatibus dolorem odit aspernatur ipsum sapiente ipsa ab! Placeat
+               dolorem autem delectus, eligendi tenetur provident fugit eum cumque ullam.
+            </p>
+         </div>
+      </div>
+   )
 }
 
-export default App;
+export default App
