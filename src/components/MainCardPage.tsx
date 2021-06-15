@@ -1,4 +1,4 @@
-interface MainCardPageProps {
+type MainCardPageProps = {
    children: React.ReactNode
 }
 

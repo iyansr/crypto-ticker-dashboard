@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 
-interface ButtonTabProps {
+type ButtonTabProps = {
    children: React.ReactNode
    isActive?: boolean
 }

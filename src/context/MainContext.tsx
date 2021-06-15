@@ -1,10 +1,9 @@
 import { createContext, ReactNode } from 'react'
+import { MainContextType } from '../types'
 
-interface MainContextType {
-   count: number
-}
+import menuTabData from '../utils/menuTabData'
 
-interface MainContextProps {
+type MainContextProps = {
    children: ReactNode
 }
 
@@ -12,7 +11,14 @@ export const MainContext = createContext<MainContextType | null>(null)
 export const MainContextConsumer = MainContext.Consumer
 
 const MainContextProvider = ({ children }: MainContextProps): JSX.Element => {
-   return <MainContext.Provider value={{ count: 1 }}>{children}</MainContext.Provider>
+   return (
+      <MainContext.Provider
+         value={{
+            menuTab: menuTabData,
+         }}>
+         {children}
+      </MainContext.Provider>
+   )
 }
 
 export default MainContextProvider
