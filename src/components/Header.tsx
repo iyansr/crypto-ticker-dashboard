@@ -6,7 +6,7 @@ const Header = (): JSX.Element => {
    const mainContext = useContext(MainContext)
 
    return (
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 py-4">
          {mainContext?.menuTab.map((menu) => (
             <ButtonTab key={menu.id}>{menu.name}</ButtonTab>
          ))}

@@ -4,10 +4,6 @@ export type MenuTabType = {
    sortTag: string | null
 }
 
-export type MainContextType = {
-   menuTab: MenuTabType[]
-}
-
 export type CryptoCurrencyAsset = {
    id: string
    assetCode: string
@@ -15,6 +11,11 @@ export type CryptoCurrencyAsset = {
    logoUrl: string
    fullLogoUrl: string
    tags: string[]
+}
+
+export type MainContextType = {
+   menuTab: MenuTabType[]
+   cryptoAssets: CryptoCurrencyAsset[] | undefined
 }
 
 export type Response = {
