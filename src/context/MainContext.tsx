@@ -1,4 +1,6 @@
-import { createContext, ReactNode, useEffect, useState } from 'react'
+import useWebSocket from 'react-use-websocket'
+
+import { createContext, ReactNode, useEffect, useRef } from 'react'
 import { useQuery } from 'react-query'
 import { fetchCryptoAssets, fetchTicker } from '../services/API'
 import { CryptoCurrencyAsset, MainContextType } from '../types'
@@ -13,7 +15,10 @@ export const MainContext = createContext<MainContextType | null>(null)
 export const MainContextConsumer = MainContext.Consumer
 
 const MainContextProvider = ({ children }: MainContextProps): JSX.Element => {
-   const [filteredCryptoAssets, setFilteredCryptoAssets] = useState<CryptoCurrencyAsset[] | undefined>([])
+   const messageHistory = useRef<CryptoCurrencyAsset[] | any>([])
+
+   const socketUrl = 'wss://stream.binance.com:9443/ws/!ticker@arr'
+   const { lastMessage } = useWebSocket(socketUrl)
 
    // eslint-disable-next-line
    const cryptoAssetsList = useQuery('cryptoAssets', fetchCryptoAssets, {
@@ -22,34 +27,43 @@ const MainContextProvider = ({ children }: MainContextProps): JSX.Element => {
 
    const cryptoAssetsTicker = useQuery('cryptoAssetsTicker', fetchTicker, {
       refetchOnWindowFocus: false,
-      onSuccess: (response) => {
-         if (!cryptoAssetsList.isLoading) {
-            const a = cryptoAssetsList.data?.data
-               .map((f) => ({
-                  ...f,
-                  ticker: response.filter((t) => t.symbol.includes(f.assetCode))[0],
-               }))
-               .filter((f) => f.ticker !== undefined)
-
-            setFilteredCryptoAssets(a)
-         }
-      },
    })
 
    useEffect(() => {
-      const makeInterval = setInterval(() => {
-         cryptoAssetsTicker.refetch()
-      }, 2000)
-      return () => clearInterval(makeInterval)
+      if (lastMessage) {
+         const messageData = JSON.parse(lastMessage?.data)
+         if (!cryptoAssetsTicker.isLoading) {
+            const filtered = cryptoAssetsList.data?.data
+               .map((f) => {
+                  const ticker = cryptoAssetsTicker.data?.filter((t) => t.symbol.includes(f.assetCode) && t.symbol.includes('BTC'))[0]
+
+                  return {
+                     ...f,
+                     ticker:
+                        messageData?.filter((m: { s: string }) => m.s === ticker?.symbol).length === 0
+                           ? ticker
+                           : {
+                                ...ticker,
+                                priceChange: messageData?.filter((m: { s: string }) => m.s === ticker?.symbol)[0]?.p,
+                                lastPrice: messageData?.filter((m: { s: string }) => m.s === ticker?.symbol)[0]?.c,
+                                priceChangePercent: messageData?.filter((m: { s: string }) => m.s === ticker?.symbol)[0]?.P,
+                             },
+                  }
+               })
+               .filter((f) => f.ticker !== undefined)
+
+            messageHistory.current = filtered
+         }
+      }
 
       // eslint-disable-next-line
-   }, [])
+   }, [lastMessage, cryptoAssetsTicker.isLoading])
 
    return (
       <MainContext.Provider
          value={{
             menuTab: menuTabData,
-            cryptoAssets: filteredCryptoAssets,
+            cryptoAssets: messageHistory.current,
          }}>
          {children}
       </MainContext.Provider>

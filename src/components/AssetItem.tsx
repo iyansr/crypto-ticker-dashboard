@@ -1,7 +1,7 @@
 import { CryptoCurrencyAsset } from '../types'
 
 type AssetItemProps = {
-   cryptoAsset: CryptoCurrencyAsset
+   cryptoAsset: CryptoCurrencyAsset | any
 }
 
 const AssetItem = ({ cryptoAsset }: AssetItemProps): JSX.Element => {
@@ -14,8 +14,10 @@ const AssetItem = ({ cryptoAsset }: AssetItemProps): JSX.Element => {
                <div className="text-xs text-gray-400">{cryptoAsset.assetName}</div>
             </div>
          </div>
-         <div style={{ flex: 2 }}>{cryptoAsset.ticker?.lastPrice}</div>
-         <div style={{ flex: 2 }}>{cryptoAsset.ticker.priceChangePercent}%</div>
+         <div style={{ flex: 2 }}>
+            {cryptoAsset.ticker?.lastPrice} {cryptoAsset.ticker?.status}
+         </div>
+         <div style={{ flex: 2 }}>{cryptoAsset.ticker && cryptoAsset.ticker.priceChangePercent}%</div>
          <div style={{ flex: 2 }}>Name</div>
          <div className="flex-1">
             <button type="button">Trade</button>

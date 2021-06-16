@@ -23,6 +23,7 @@ module.exports = {
       'linebreak-style': 'off',
       'react/react-in-jsx-scope': 'off',
       'import/prefer-default-export': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
       'prettier/prettier': [
          'error',
          {

@@ -15,9 +15,19 @@ const Table = (): JSX.Element => {
             <div className="flex-1" />
          </div>
 
-         {mainContext?.cryptoAssets?.map((cryptoAsset) => (
-            <AssetItem cryptoAsset={cryptoAsset} key={cryptoAsset.id} />
-         ))}
+         {mainContext?.cryptoAssets &&
+            mainContext?.cryptoAssets?.map(
+               (cryptoAsset: {
+                  id: any
+                  assetCode?: string
+                  assetName?: string
+                  logoUrl?: string
+                  fullLogoUrl?: string
+                  tags?: string[]
+                  feeReferenceAsset?: string
+                  ticker?: any
+               }) => <AssetItem cryptoAsset={cryptoAsset} key={cryptoAsset.id} />
+            )}
       </section>
    )
 }
