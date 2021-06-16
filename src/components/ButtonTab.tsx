@@ -11,7 +11,7 @@ const ButtonTab = ({ isActive, children, onClick }: ButtonTabProps): JSX.Element
       <button
          onClick={onClick}
          type="button"
-         className={clsx('text-xs px-4 py-1 rounded-md border focus:outline-none', {
+         className={clsx('text-xs px-4 py-1 rounded-md border focus:outline-none bg-white', {
             'text-yellow-600': isActive,
             'border-yellow-200': isActive,
             'bg-yellow-50': isActive,

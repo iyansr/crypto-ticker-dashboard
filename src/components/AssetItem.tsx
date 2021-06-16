@@ -26,9 +26,10 @@ const AssetItem = ({ cryptoAsset }: AssetItemProps): JSX.Element => {
 
    return (
       <div
-         className="w-full flex flex-row bg-white p-4 text-sm border-b font-medium border-gray-200 hover:bg-gray-100 transition duration-200"
+         className="w-full flex flex-col md:flex-row bg-white p-4 text-sm border-b font-medium border-gray-200 hover:bg-gray-100 transition duration-200"
          key={cryptoAsset.id}>
-         <div style={{ flex: 3 }} className=" flex flex-row items-center">
+         {/* {DESKTOP} */}
+         <div style={{ flex: 3 }} className="flex flex-row items-center">
             <img
                src="https://cdn.techinasia.com/data/images/ubhDcXriUDx0nSklmg659rspXh6ZiTA7ciHUi1o3.png"
                alt={`Logo ${cryptoAsset.assetCode}`}
@@ -41,7 +42,7 @@ const AssetItem = ({ cryptoAsset }: AssetItemProps): JSX.Element => {
          </div>
          <div
             style={{ flex: 2 }}
-            className={clsx('text-gray-900 transition-colors duration-300', {
+            className={clsx('text-gray-900 hidden md:block transition-colors duration-300', {
                'text-green-600': currentStatus === 'up',
                'text-red-500': currentStatus === 'down',
             })}>
@@ -49,15 +50,52 @@ const AssetItem = ({ cryptoAsset }: AssetItemProps): JSX.Element => {
          </div>
          <div
             style={{ flex: 2 }}
-            className={clsx('text-gray-900 transition-colors duration-300', {
+            className={clsx('text-gray-900 hidden md:block transition-colors duration-300', {
                'text-green-600': currentStatus === 'up',
                'text-red-500': currentStatus === 'down',
             })}>
             {cryptoAsset.ticker?.priceChangePercent}%
          </div>
-         <div style={{ flex: 2 }}>${thousandSeparator(parseFloat(cryptoAsset.ticker?.volume).toFixed(2))}</div>
-         <div className="flex-1">
-            <button type="button">Trade</button>
+         <div style={{ flex: 2 }} className="hidden md:block">
+            ${thousandSeparator(parseFloat(cryptoAsset.ticker?.volume).toFixed(2))}
+         </div>
+         <div className="flex-1 md:block hidden">
+            <button type="button" className="bg-white px-4 py-1 rounded-sm border focus:outline-none border-yellow-200 text-yellow-600">
+               Trade
+            </button>
+         </div>
+
+         <div className="flex md:hidden items-center justify-between mt-2">
+            <div className="text-xs text-gray-400">Last Price</div>
+            <div
+               className={clsx('text-gray-900 transition-colors duration-300', {
+                  'text-green-600': currentStatus === 'up',
+                  'text-red-500': currentStatus === 'down',
+               })}>
+               ${cryptoAsset.ticker?.lastPrice}
+            </div>
+         </div>
+
+         <div className="flex md:hidden items-center justify-between mt-2">
+            <div className="text-xs text-gray-400">24h Change</div>
+            <div
+               className={clsx('text-gray-900 transition-colors duration-300', {
+                  'text-green-600': currentStatus === 'up',
+                  'text-red-500': currentStatus === 'down',
+               })}>
+               {cryptoAsset.ticker?.priceChangePercent}%
+            </div>
+         </div>
+
+         <div className="flex md:hidden items-center justify-between mt-2">
+            <div className="text-xs text-gray-400">market Cap</div>
+            <div className="text-gray-900 transition-colors duration-300">${thousandSeparator(parseFloat(cryptoAsset.ticker?.volume).toFixed(2))}</div>
+         </div>
+
+         <div className="flex justify-end md:hidden w-full flex-row mt-2">
+            <button type="button" className="bg-white px-4 py-1 rounded-sm border focus:outline-none border-yellow-200 text-yellow-600">
+               Trade
+            </button>
          </div>
       </div>
    )
