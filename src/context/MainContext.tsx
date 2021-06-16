@@ -16,7 +16,6 @@ export const MainContextConsumer = MainContext.Consumer
 
 const MainContextProvider = ({ children }: MainContextProps): JSX.Element => {
    const cryptoAssets = useRef<CryptoCurrencyAsset[] | any>([])
-   const filteredCryptoAssets = useRef<CryptoCurrencyAsset[] | any>([])
 
    const [sortTag, setSortTag] = useState<string>('all')
 

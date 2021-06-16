@@ -25,7 +25,9 @@ const AssetItem = ({ cryptoAsset }: AssetItemProps): JSX.Element => {
    }, [cryptoAsset.ticker.status])
 
    return (
-      <div className="w-full flex flex-row bg-white p-4 text-sm border-b font-medium border-gray-200" key={cryptoAsset.id}>
+      <div
+         className="w-full flex flex-row bg-white p-4 text-sm border-b font-medium border-gray-200 hover:bg-gray-100 transition duration-200"
+         key={cryptoAsset.id}>
          <div style={{ flex: 3 }} className=" flex flex-row items-center">
             <img
                src="https://cdn.techinasia.com/data/images/ubhDcXriUDx0nSklmg659rspXh6ZiTA7ciHUi1o3.png"
@@ -39,7 +41,7 @@ const AssetItem = ({ cryptoAsset }: AssetItemProps): JSX.Element => {
          </div>
          <div
             style={{ flex: 2 }}
-            className={clsx('text-gray-900', {
+            className={clsx('text-gray-900 transition-colors duration-300', {
                'text-green-600': currentStatus === 'up',
                'text-red-500': currentStatus === 'down',
             })}>
@@ -47,7 +49,7 @@ const AssetItem = ({ cryptoAsset }: AssetItemProps): JSX.Element => {
          </div>
          <div
             style={{ flex: 2 }}
-            className={clsx('text-gray-900', {
+            className={clsx('text-gray-900 transition-colors duration-300', {
                'text-green-600': currentStatus === 'up',
                'text-red-500': currentStatus === 'down',
             })}>

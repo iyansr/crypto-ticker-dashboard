@@ -15,7 +15,7 @@ const Table = (): JSX.Element => {
             <div className="flex-1" />
          </div>
 
-         {mainContext?.cryptoAssets?.map((cryptoAsset) => (
+         {mainContext?.cryptoAssets?.map((cryptoAsset, index) => (
             <AssetItem cryptoAsset={cryptoAsset} key={cryptoAsset.id} />
          ))}
       </section>
