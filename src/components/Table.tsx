@@ -11,23 +11,13 @@ const Table = (): JSX.Element => {
             <div style={{ flex: 3 }}>Name</div>
             <div style={{ flex: 2 }}>Last Price</div>
             <div style={{ flex: 2 }}>24hr Change</div>
-            <div style={{ flex: 2 }}>Name</div>
+            <div style={{ flex: 2 }}>Market Cap</div>
             <div className="flex-1" />
          </div>
 
-         {mainContext?.cryptoAssets &&
-            mainContext?.cryptoAssets?.map(
-               (cryptoAsset: {
-                  id: any
-                  assetCode?: string
-                  assetName?: string
-                  logoUrl?: string
-                  fullLogoUrl?: string
-                  tags?: string[]
-                  feeReferenceAsset?: string
-                  ticker?: any
-               }) => <AssetItem cryptoAsset={cryptoAsset} key={cryptoAsset.id} />
-            )}
+         {mainContext?.cryptoAssets?.map((cryptoAsset) => (
+            <AssetItem cryptoAsset={cryptoAsset} key={cryptoAsset.id} />
+         ))}
       </section>
    )
 }

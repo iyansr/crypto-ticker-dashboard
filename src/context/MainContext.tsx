@@ -36,17 +36,24 @@ const MainContextProvider = ({ children }: MainContextProps): JSX.Element => {
             const filtered = cryptoAssetsList.data?.data
                .map((f) => {
                   const ticker = cryptoAssetsTicker.data?.filter((t) => t.symbol.includes(f.assetCode) && t.symbol.includes('BTC'))[0]
-
+                  const tickerRaw = messageData?.filter((m: { s: string }) => m.s === ticker?.symbol)
                   return {
                      ...f,
                      ticker:
-                        messageData?.filter((m: { s: string }) => m.s === ticker?.symbol).length === 0
+                        tickerRaw.length === 0
                            ? ticker
                            : {
                                 ...ticker,
-                                priceChange: messageData?.filter((m: { s: string }) => m.s === ticker?.symbol)[0]?.p,
-                                lastPrice: messageData?.filter((m: { s: string }) => m.s === ticker?.symbol)[0]?.c,
-                                priceChangePercent: messageData?.filter((m: { s: string }) => m.s === ticker?.symbol)[0]?.P,
+                                priceChange: tickerRaw[0]?.p,
+                                lastPrice: tickerRaw[0]?.c,
+                                priceChangePercent: tickerRaw[0]?.P,
+                                status:
+                                   // eslint-disable-next-line
+                                   parseFloat(tickerRaw[0].c) < parseFloat(ticker?.lastPrice ?? '0')
+                                      ? 'down'
+                                      : parseFloat(tickerRaw[0].c) > parseFloat(ticker?.lastPrice ?? '0')
+                                      ? 'up'
+                                      : 'stable',
                              },
                   }
                })
