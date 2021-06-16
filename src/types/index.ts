@@ -11,6 +11,8 @@ export type CryptoCurrencyAsset = {
    logoUrl: string
    fullLogoUrl: string
    tags: string[]
+   feeReferenceAsset: string
+   ticker: Ticker
 }
 
 export type MainContextType = {

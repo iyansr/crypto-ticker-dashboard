@@ -9,8 +9,8 @@ const Table = (): JSX.Element => {
       <section className="w-full">
          <div className="w-full flex flex-row bg-gray-100 p-4 text-xs border-b border-gray-200">
             <div style={{ flex: 3 }}>Name</div>
-            <div style={{ flex: 2 }}>Name</div>
-            <div style={{ flex: 2 }}>Name</div>
+            <div style={{ flex: 2 }}>Last Price</div>
+            <div style={{ flex: 2 }}>24hr Change</div>
             <div style={{ flex: 2 }}>Name</div>
             <div className="flex-1" />
          </div>

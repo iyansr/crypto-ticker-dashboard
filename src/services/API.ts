@@ -1,10 +1,11 @@
-import { CryptoCurrencyAsset } from '../types'
+import { Response, TickerResponse } from '../types'
 
-type JSONReponse = {
-   data: CryptoCurrencyAsset[]
+export const fetchCryptoAssets = async (): Promise<Response> => {
+   const res = await fetch(`https://www.binance.com/bapi/asset/v2/public/asset/asset/get-all-asset`)
+   return res.json()
 }
 
-export const fetchCryptoAssets = async (): Promise<JSONReponse> => {
-   const res = await fetch(`https://www.binance.com/bapi/asset/v2/public/asset/asset/get-all-asset`)
+export const fetchTicker = async (): Promise<TickerResponse> => {
+   const res = await fetch(`https://api.binance.com/api/v3/ticker/24hr`)
    return res.json()
 }
