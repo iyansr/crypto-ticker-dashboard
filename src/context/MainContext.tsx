@@ -1,6 +1,6 @@
 import useWebSocket from 'react-use-websocket'
 
-import { createContext, ReactNode, useEffect, useRef } from 'react'
+import { createContext, ReactNode, useEffect, useRef, useState } from 'react'
 import { useQuery } from 'react-query'
 import { fetchCryptoAssets, fetchTicker } from '../services/API'
 import { CryptoCurrencyAsset, MainContextType } from '../types'
@@ -15,7 +15,10 @@ export const MainContext = createContext<MainContextType | null>(null)
 export const MainContextConsumer = MainContext.Consumer
 
 const MainContextProvider = ({ children }: MainContextProps): JSX.Element => {
-   const messageHistory = useRef<CryptoCurrencyAsset[] | any>([])
+   const cryptoAssets = useRef<CryptoCurrencyAsset[] | any>([])
+   const filteredCryptoAssets = useRef<CryptoCurrencyAsset[] | any>([])
+
+   const [sortTag, setSortTag] = useState<string>('all')
 
    const socketUrl = 'wss://stream.binance.com:9443/ws/!ticker@arr'
    const { lastMessage } = useWebSocket(socketUrl)
@@ -58,19 +61,38 @@ const MainContextProvider = ({ children }: MainContextProps): JSX.Element => {
                   }
                })
                .filter((f) => f.ticker !== undefined)
+               .sort((a, b) => {
+                  if (a.assetCode < b.assetCode) {
+                     return -1
+                  }
+                  if (a.assetCode > b.assetCode) {
+                     return 1
+                  }
+                  return 0
+               })
 
-            messageHistory.current = filtered
+            if (sortTag === 'all') {
+               cryptoAssets.current = filtered
+            } else {
+               cryptoAssets.current = filtered?.filter((c: { tags: string[] }) => c.tags.includes(sortTag))
+            }
          }
       }
 
       // eslint-disable-next-line
-   }, [lastMessage, cryptoAssetsTicker.isLoading])
+   }, [lastMessage, cryptoAssetsTicker.isLoading, sortTag])
+
+   const onShort = (sortTagParam: string): void => {
+      setSortTag(sortTagParam)
+   }
 
    return (
       <MainContext.Provider
          value={{
             menuTab: menuTabData,
-            cryptoAssets: messageHistory.current,
+            cryptoAssets: cryptoAssets.current,
+            sortTag,
+            onShort,
          }}>
          {children}
       </MainContext.Provider>

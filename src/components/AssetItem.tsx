@@ -53,7 +53,7 @@ const AssetItem = ({ cryptoAsset }: AssetItemProps): JSX.Element => {
             })}>
             {cryptoAsset.ticker?.priceChangePercent}%
          </div>
-         <div style={{ flex: 2 }}>${thousandSeparator(parseFloat(cryptoAsset.ticker?.volume).toFixed(2))}M</div>
+         <div style={{ flex: 2 }}>${thousandSeparator(parseFloat(cryptoAsset.ticker?.volume).toFixed(2))}</div>
          <div className="flex-1">
             <button type="button">Trade</button>
          </div>

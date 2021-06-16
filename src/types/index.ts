@@ -18,6 +18,8 @@ export type CryptoCurrencyAsset = {
 export type MainContextType = {
    menuTab: MenuTabType[]
    cryptoAssets: CryptoCurrencyAsset[] | undefined
+   sortTag: string
+   onShort: Function
 }
 
 export type Response = {

@@ -8,7 +8,14 @@ const Header = (): JSX.Element => {
    return (
       <div className="flex items-center gap-2 py-4">
          {mainContext?.menuTab.map((menu) => (
-            <ButtonTab key={menu.id}>{menu.name}</ButtonTab>
+            <ButtonTab
+               onClick={() => {
+                  mainContext.onShort(menu.sortTag)
+               }}
+               isActive={mainContext.sortTag === menu.sortTag}
+               key={menu.id}>
+               {menu.name}
+            </ButtonTab>
          ))}
       </div>
    )

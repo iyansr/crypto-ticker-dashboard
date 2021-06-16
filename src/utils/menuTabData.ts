@@ -4,7 +4,7 @@ const menuTabData: MenuTabType[] = [
    {
       id: 0,
       name: 'All',
-      sortTag: null,
+      sortTag: 'all',
    },
    {
       id: 1,
