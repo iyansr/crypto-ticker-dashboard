@@ -15,9 +15,13 @@ const Table = (): JSX.Element => {
             <div className="flex-1" />
          </div>
 
-         {mainContext?.cryptoAssets?.map((cryptoAsset, index) => (
-            <AssetItem index={index} cryptoAsset={cryptoAsset} key={cryptoAsset.id} />
-         ))}
+         {mainContext?.cryptoAssets?.length === 0 ? (
+            <div className="h-80 w-full flex flex-col items-center justify-center">
+               <img src="/loader.gif" alt="Loader" className="h-16 w-16" />
+            </div>
+         ) : (
+            mainContext?.cryptoAssets?.map((cryptoAsset, index) => <AssetItem index={index} cryptoAsset={cryptoAsset} key={cryptoAsset.id} />)
+         )}
       </section>
    )
 }

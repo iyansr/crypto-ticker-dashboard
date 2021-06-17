@@ -52,9 +52,9 @@ const MainContextProvider = ({ children }: MainContextProps): JSX.Element => {
                                 priceChangePercent: tickerRaw[0]?.P,
                                 status:
                                    // eslint-disable-next-line
-                                   parseFloat(tickerRaw[0].c) < parseFloat(ticker?.lastPrice ?? '0')
+                                   parseFloat(tickerRaw[0].P) < parseFloat(ticker?.priceChangePercent ?? '0')
                                       ? 'down'
-                                      : parseFloat(tickerRaw[0].c) > parseFloat(ticker?.lastPrice ?? '0')
+                                      : parseFloat(tickerRaw[0].P) > parseFloat(ticker?.priceChangePercent ?? '0')
                                       ? 'up'
                                       : 'stable',
                              },
