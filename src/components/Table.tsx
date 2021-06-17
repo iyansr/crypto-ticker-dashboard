@@ -6,7 +6,7 @@ const Table = (): JSX.Element => {
    const mainContext = useContext(MainContext)
 
    return (
-      <section className="w-full">
+      <section className="w-full" data-testid="mainTable">
          <div className="w-full hidden md:flex  flex-row bg-gray-100 p-4 text-xs border-b border-gray-200">
             <div style={{ flex: 3 }}>Name</div>
             <div style={{ flex: 2 }}>Last Price</div>
@@ -15,8 +15,8 @@ const Table = (): JSX.Element => {
             <div className="flex-1" />
          </div>
 
-         {mainContext?.cryptoAssets?.map((cryptoAsset) => (
-            <AssetItem cryptoAsset={cryptoAsset} key={cryptoAsset.id} />
+         {mainContext?.cryptoAssets?.map((cryptoAsset, index) => (
+            <AssetItem index={index} cryptoAsset={cryptoAsset} key={cryptoAsset.id} />
          ))}
       </section>
    )

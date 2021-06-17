@@ -4,6 +4,7 @@ import { CryptoCurrencyAsset } from '../types'
 
 type AssetItemProps = {
    cryptoAsset: CryptoCurrencyAsset
+   index: number
 }
 
 const thousandSeparator = (number: string): string => {
@@ -12,7 +13,7 @@ const thousandSeparator = (number: string): string => {
    return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
 }
 
-const AssetItem = ({ cryptoAsset }: AssetItemProps): JSX.Element => {
+const AssetItem = ({ cryptoAsset, index }: AssetItemProps): JSX.Element => {
    const [currentStatus, setCurrentStatus] = useState<string>(cryptoAsset.ticker.status)
 
    useEffect(() => {
@@ -26,6 +27,7 @@ const AssetItem = ({ cryptoAsset }: AssetItemProps): JSX.Element => {
 
    return (
       <div
+         data-testid={`asset-${index}`}
          className="w-full flex flex-col md:flex-row bg-white p-4 text-sm border-b font-medium border-gray-200 hover:bg-gray-100 transition duration-200"
          key={cryptoAsset.id}>
          {/* {DESKTOP} */}
