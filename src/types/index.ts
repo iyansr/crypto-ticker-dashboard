@@ -19,7 +19,7 @@ export type MainContextType = {
    menuTab: MenuTabType[]
    cryptoAssets: CryptoCurrencyAsset[] | undefined
    sortTag: string
-   onShort: Function
+   onShort: (sortTagParam: any) => void
    searchValue: string
    setSearchValue: React.Dispatch<React.SetStateAction<string>>
 }
