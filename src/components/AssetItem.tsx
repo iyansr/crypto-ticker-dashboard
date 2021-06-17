@@ -48,7 +48,7 @@ const AssetItem = ({ cryptoAsset, index }: AssetItemProps): JSX.Element => {
                'text-green-600': currentStatus === 'up',
                'text-red-500': currentStatus === 'down',
             })}>
-            ${cryptoAsset.ticker?.lastPrice}
+            ${thousandSeparator(parseFloat(cryptoAsset.ticker?.lastPrice).toFixed(2))}
          </div>
          <div
             style={{ flex: 2 }}
@@ -62,9 +62,14 @@ const AssetItem = ({ cryptoAsset, index }: AssetItemProps): JSX.Element => {
             ${thousandSeparator(parseFloat(cryptoAsset.ticker?.volume).toFixed(2))}
          </div>
          <div className="flex-1 md:block hidden">
-            <button type="button" className="bg-white px-4 py-1 rounded-sm border focus:outline-none border-yellow-200 text-yellow-600">
+            <a
+               target="_blank"
+               href={`https://www.binance.com/en/trade/${cryptoAsset.assetCode}_USDT?layout=pro&type=spot`}
+               rel="noopener noreferrer"
+               type="button"
+               className="bg-white px-4 py-1 rounded-sm border focus:outline-none border-yellow-200 text-yellow-600">
                Trade
-            </button>
+            </a>
          </div>
 
          <div className="flex md:hidden items-center justify-between mt-2">
@@ -95,9 +100,14 @@ const AssetItem = ({ cryptoAsset, index }: AssetItemProps): JSX.Element => {
          </div>
 
          <div className="flex justify-end md:hidden w-full flex-row mt-2">
-            <button type="button" className="bg-white px-4 py-1 rounded-sm border focus:outline-none border-yellow-200 text-yellow-600">
+            <a
+               target="_blank"
+               href={`https://www.binance.com/en/trade/${cryptoAsset.assetCode}_USDT?layout=pro&type=spot`}
+               rel="noopener noreferrer"
+               type="button"
+               className="bg-white px-4 py-1 rounded-sm border focus:outline-none border-yellow-200 text-yellow-600">
                Trade
-            </button>
+            </a>
          </div>
       </div>
    )
