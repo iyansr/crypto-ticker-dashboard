@@ -20,6 +20,8 @@ export type MainContextType = {
    cryptoAssets: CryptoCurrencyAsset[] | undefined
    sortTag: string
    onShort: Function
+   searchValue: string
+   setSearchValue: React.Dispatch<React.SetStateAction<string>>
 }
 
 export type Response = {

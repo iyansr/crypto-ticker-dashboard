@@ -11,13 +11,14 @@ type MainContextProps = {
    children: ReactNode
 }
 
-export const MainContext = createContext<MainContextType | null>(null)
+export const MainContext = createContext<MainContextType | undefined>(undefined)
 export const MainContextConsumer = MainContext.Consumer
 
 const MainContextProvider = ({ children }: MainContextProps): JSX.Element => {
    const cryptoAssets = useRef<CryptoCurrencyAsset[] | any>([])
 
    const [sortTag, setSortTag] = useState<string>('all')
+   const [searchValue, setSearchValue] = useState<string>('')
 
    const socketUrl = 'wss://stream.binance.com:9443/ws/!ticker@arr'
    const { lastMessage } = useWebSocket(socketUrl)
@@ -69,6 +70,9 @@ const MainContextProvider = ({ children }: MainContextProps): JSX.Element => {
                   }
                   return 0
                })
+               .filter((f) => {
+                  return f.assetName.toLocaleLowerCase().includes(searchValue)
+               })
 
             if (sortTag === 'all') {
                cryptoAssets.current = filtered
@@ -79,7 +83,7 @@ const MainContextProvider = ({ children }: MainContextProps): JSX.Element => {
       }
 
       // eslint-disable-next-line
-   }, [lastMessage, cryptoAssetsTicker.isLoading, sortTag])
+   }, [lastMessage, cryptoAssetsTicker.isLoading, sortTag, searchValue])
 
    const onShort = (sortTagParam: string): void => {
       setSortTag(sortTagParam)
@@ -92,6 +96,8 @@ const MainContextProvider = ({ children }: MainContextProps): JSX.Element => {
             cryptoAssets: cryptoAssets.current,
             sortTag,
             onShort,
+            searchValue,
+            setSearchValue,
          }}>
          {children}
       </MainContext.Provider>
