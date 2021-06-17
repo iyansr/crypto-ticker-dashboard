@@ -38,7 +38,8 @@ export type Ticker = {
    prevClosePrice: string
    lastPrice: string
    volume: string
-   status: 'up' | 'down' | 'stable' | string
+   statusPercent: 'up' | 'down' | 'stable' | string
+   statusLastPrice: 'up' | 'down' | 'stable' | string
 }
 
 export type TickerResponse = Ticker[]

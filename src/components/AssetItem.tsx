@@ -14,16 +14,26 @@ const thousandSeparator = (number: string): string => {
 }
 
 const AssetItem = ({ cryptoAsset, index }: AssetItemProps): JSX.Element => {
-   const [currentStatus, setCurrentStatus] = useState<string>(cryptoAsset.ticker.status)
+   const [currentStatusLastPrice, setCurrentStatusLastPrice] = useState<string>(cryptoAsset.ticker.statusLastPrice)
+   const [currentStatusPercent, setCurrentStatusPercent] = useState<string>(cryptoAsset.ticker.statusPercent)
 
    useEffect(() => {
-      setCurrentStatus((prev) => {
-         if (prev === cryptoAsset.ticker.status) {
+      setCurrentStatusLastPrice((prev) => {
+         if (prev === cryptoAsset.ticker.statusLastPrice) {
             return prev
          }
-         return cryptoAsset.ticker.status
+         return cryptoAsset.ticker.statusLastPrice
       })
-   }, [cryptoAsset.ticker.status])
+   }, [cryptoAsset.ticker.statusLastPrice])
+
+   useEffect(() => {
+      setCurrentStatusPercent((prev) => {
+         if (prev === cryptoAsset.ticker.statusPercent) {
+            return prev
+         }
+         return cryptoAsset.ticker.statusPercent
+      })
+   }, [cryptoAsset.ticker.statusPercent])
 
    return (
       <div
@@ -45,16 +55,16 @@ const AssetItem = ({ cryptoAsset, index }: AssetItemProps): JSX.Element => {
          <div
             style={{ flex: 2 }}
             className={clsx('text-gray-900 hidden md:block transition-colors duration-300', {
-               'text-green-600': currentStatus === 'up',
-               'text-red-500': currentStatus === 'down',
+               'text-green-600': currentStatusLastPrice === 'up',
+               'text-red-500': currentStatusLastPrice === 'down',
             })}>
             ${thousandSeparator(parseFloat(cryptoAsset.ticker?.lastPrice).toFixed(2))}
          </div>
          <div
             style={{ flex: 2 }}
             className={clsx('text-gray-900 hidden md:block transition-colors duration-300', {
-               'text-green-600': currentStatus === 'up',
-               'text-red-500': currentStatus === 'down',
+               'text-green-600': currentStatusPercent === 'up',
+               'text-red-500': currentStatusPercent === 'down',
             })}>
             {cryptoAsset.ticker?.priceChangePercent}%
          </div>
@@ -76,8 +86,8 @@ const AssetItem = ({ cryptoAsset, index }: AssetItemProps): JSX.Element => {
             <div className="text-xs text-gray-400">Last Price</div>
             <div
                className={clsx('text-gray-900 transition-colors duration-300', {
-                  'text-green-600': currentStatus === 'up',
-                  'text-red-500': currentStatus === 'down',
+                  'text-green-600': currentStatusLastPrice === 'up',
+                  'text-red-500': currentStatusLastPrice === 'down',
                })}>
                ${cryptoAsset.ticker?.lastPrice}
             </div>
@@ -87,8 +97,8 @@ const AssetItem = ({ cryptoAsset, index }: AssetItemProps): JSX.Element => {
             <div className="text-xs text-gray-400">24h Change</div>
             <div
                className={clsx('text-gray-900 transition-colors duration-300', {
-                  'text-green-600': currentStatus === 'up',
-                  'text-red-500': currentStatus === 'down',
+                  'text-green-600': currentStatusPercent === 'up',
+                  'text-red-500': currentStatusPercent === 'down',
                })}>
                {cryptoAsset.ticker?.priceChangePercent}%
             </div>
