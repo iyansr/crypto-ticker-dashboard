@@ -38,7 +38,7 @@ const MainContextProvider = ({ children }: MainContextProps): JSX.Element => {
          if (!cryptoAssetsTicker.isLoading) {
             const filtered = cryptoAssetsList.data?.data
                .map((f) => {
-                  const ticker = cryptoAssetsTicker.data?.filter((t) => t.symbol.includes(f.assetCode) && t.symbol.includes('USDT'))[0]
+                  const ticker = cryptoAssetsTicker.data?.filter((t) => t.symbol === `${f.assetCode}USDT`)[0]
                   const tickerRaw = messageData?.filter((m: { s: string }) => m.s === ticker?.symbol)
                   return {
                      ...f,
